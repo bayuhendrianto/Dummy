@@ -4,7 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
 const data = require("./data.json");
-var http = require('http');
+var http = require("http");
 var server = http.createServer(app);
 
 app.use(cors({ credentials: true, origin: "*" }));
@@ -20,7 +20,13 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
 app.use(cookieParser());
 
+app.use(express.static("public"));
+
 app.get("/", (req, res) => {
+  res.send("Hey this is my API running 🥳");
+});
+
+app.get("/dummy-data", (req, res) => {
   let { page, size, searchText } = req.query;
   let { pageConvert, sizeConvert } = generatePageSize(page, size);
 
